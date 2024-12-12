@@ -1,17 +1,60 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    {% block stylesheets %}
+    {% endblock %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    {% block javascripts %}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+    {% endblock %}
+
+
+</head>
+<body  class="bg-mountains bg-cover bg-fixed" style="background-image: url('{{ asset('images/Mountains.jpg') }}')">
+{% block header %}
+    <a href="/">
+        <button class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" type="submit" name="page" value="index">Index</button>
+    </a>
+    {% if not app.user %}
+        <a href="{{ path('register_page') }}">
+            <button class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                    type="submit" name="page" value="register">Register
+            </button>
+        </a>
+
+        <a href="{{ path('login_page') }}">
+            <button class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                    type="submit" name="page" value="login">Login
+            </button>
+        </a>
+        <a href="{{ path('password_failed_page') }}">
+            <button class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                    type="submit" name="page" value="password-failed">Reset Password
+            </button>
+        </a>
+
+
+    {% else %}
+        <a href="index.php/?page=logout">
+            <button type="submit" name="page" value="logout">Logout</button>
+        </a>
+
+        <a href="{{ path('favorite-page') }}">
+            <button type="submit" name="page" value="favorites">Favorites</button>
+        </a>
+
+        <a href="index.php/?page=cart">
+            <button type="submit" name="page" value="cart">Cart</button>
+        </a>
+
+
+        <h1> Welcome: {{ userDto.firstName }}</h1>
+    {% endif %}
+{% endblock %}
+{% block body %}{% endblock %}
+</body>
 </html>
