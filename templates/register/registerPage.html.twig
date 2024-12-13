@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form method="post" action="{{ path('register_page_post') }}">
+        <h1>register</h1>
+        {{ form_start(registration_form, {'attr': {'id': 'registrationForm', 'class': 'mt-8 mx-auto text-white'}}) }}
+        <h1 class="text-2xl text-center mb-8">register</h1>
+        <main class="mx-auto w-fit">
+            <table>
+                <tr>
+                    <td>{{ form_label(registration_form.firstName) }}</td>
+                    <td>{{ form_widget(registration_form.firstName) }}</td>
+                    <td>{{ form_errors(registration_form.firstName) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_label(registration_form.lastName) }}</td>
+                    <td>{{ form_widget(registration_form.lastName) }}</td>
+                    <td>{{ form_errors(registration_form.lastName) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_label(registration_form.email) }}</td>
+                    <td>{{ form_widget(registration_form.email) }}</td>
+                    <td>{{ form_errors(registration_form.email) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_label(registration_form.password.first) }}</td>
+                    <td>{{ form_widget(registration_form.password.first) }}</td>
+                    <td>{{ form_errors(registration_form.password.first) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_label(registration_form.password.second) }}</td>
+                    <td>{{ form_widget(registration_form.password.second) }}</td>
+                    <td>{{ form_errors(registration_form.password.second) }}</td>
+                </tr>
+                <tr>
+                <tr>
+                    <td>{{ form_label(registration_form.submit) }}</td>
+                    <td>{{ form_widget(registration_form.submit) }}</td>
+                </tr>
+            </table>
+        </main>
+        {{ form_end(registration_form) }}
+    </form>
+{% endblock %}

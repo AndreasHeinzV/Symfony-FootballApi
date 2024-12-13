@@ -6,6 +6,7 @@ namespace App\Components\Api;
 
 use App\Components\Api\Business\ApiRequestFacadeInterface;
 use App\Components\Api\Business\Model\ApiRequesterInterface;
+use App\Components\Football\Persitence\DTOs\PlayerDto;
 
 readonly class ApiRequestFacade implements ApiRequestFacadeInterface
 {
@@ -15,8 +16,7 @@ readonly class ApiRequestFacade implements ApiRequestFacadeInterface
 
     public function getTeam(string $id): array
     {
-        // TODO: Implement getTeam() method.
-        return [];
+        return $this->apiRequester->getTeam($id);
     }
 
     public function getLeagueTeams(string $code): array
@@ -26,7 +26,11 @@ readonly class ApiRequestFacade implements ApiRequestFacadeInterface
 
     public function getLeagues(): array
     {
-        // TODO: Implement getLeagues() method.
         return $this->apiRequester->getLeagues();
+    }
+
+    public function getPlayer(string $playerId): ?PlayerDto
+    {
+        return $this->apiRequester->getPlayer($playerId);
     }
 }

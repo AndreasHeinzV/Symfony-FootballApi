@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Components\Api\Business\Model;
 
-use App\Components\Football\Mapper\LeaguesMapperInterface;
-use App\Components\Football\Mapper\LeagueTeamsMapperInterface;
+use App\Components\Football\Persitence\DTOs\PlayerDto;
+use App\Components\Football\Persitence\Mapper\LeaguesMapperInterface;
+use App\Components\Football\Persitence\Mapper\LeagueTeamsMapperInterface;
+use App\Components\Football\Persitence\Mapper\PlayerMapperInterface;
+use App\Components\Football\Persitence\Mapper\TeamMapperInterface;
 use App\Service\CacheService;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class ApiRequester implements ApiRequesterInterface
+readonly class ApiRequester implements ApiRequesterInterface
 {
     private string $apiKey;
     private CacheService $cacheService;
@@ -19,6 +22,8 @@ class ApiRequester implements ApiRequesterInterface
         private HttpClientInterface $httpClient,
         private LeaguesMapperInterface $leaguesMapper,
         private LeagueTeamsMapperInterface $leagueTeamsMapper,
+        private TeamMapperInterface $teamMapper,
+        private PlayerMapperInterface $playerMapper,
         CacheService $cacheService,
     ) {
         $this->apiKey = $apiKey;
@@ -60,7 +65,7 @@ class ApiRequester implements ApiRequesterInterface
             $leagueArray['id'] = $competition['id'];
             $leagueArray['link'] = '?page=competitions&name='.$competition['code'];
             $leagueArray['name'] = $competition['name'];
-            $leagueDTO = $this->leaguesMapper->createLeaguesDTO($leagueArray);
+            $leagueDTO = $this->leaguesMapper->createLeaguesDto($leagueArray);
 
             $leaguesArray[] = $leagueDTO;
         }
@@ -70,8 +75,22 @@ class ApiRequester implements ApiRequesterInterface
 
     public function getTeam(string $id): array
     {
-        // TODO: Implement getTeam() method.
-        return [];
+        $uri = 'https://api.football-data.org/v4/teams/'.$id;
+        $team = $this->apiRequest($uri);
+        $playersArray = [];
+
+        $playersArray['teamName'] = $team['name'];
+        $playersArray['teamID'] = $team['id'];
+        $playersArray['crest'] = $team['crest'];
+
+        foreach ($team['squad'] as $player) {
+            $playerArray['playerID'] = $player['id'];
+            $playerArray['link'] = '?page=player&id='.$player['id'];
+            $playerArray['name'] = $player['name'];
+            $playersArray['squad'][] = $this->teamMapper->createTeamDto($playerArray);
+        }
+
+        return $playersArray;
     }
 
     public function getLeagueTeams(string $code): array
@@ -85,7 +104,7 @@ class ApiRequester implements ApiRequesterInterface
             $team = [];
             $team['position'] = $table['position'];
             $team['name'] = $table['team']['name'];
-            $team['link'] = 'page=team&id='.$table['team']['id'];
+            $team['link'] = '/?page=team&id='.$table['team']['id'];
             $team['playedGames'] = $table['playedGames'];
             $team['won'] = $table['won'];
             $team['draw'] = $table['draw'];
@@ -98,5 +117,16 @@ class ApiRequester implements ApiRequesterInterface
         }
 
         return $teams;
+    }
+
+    public function getPlayer(string $playerId): ?PlayerDto
+    {
+        $uri = 'https://api.football-data.org/v4/persons/'.$playerId;
+
+        if (empty($this->apiRequest($uri))) {
+            return null;
+        }
+
+        return $this->playerMapper->createTeamDTO($this->apiRequest($uri));
     }
 }
