@@ -18,44 +18,37 @@
       style="background: linear-gradient(rgba(0, 0, 0, 0.6),rgba(0, 0, 0, 0.6)), url('{{ asset('images/Mountains.jpg') }}'); background-size: cover;)">
 {% block header %}
     <a href="{{ path('leaguePage') }}">
-        <button class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                type="submit" name="page" value="index">Index
+        <button class="base-button" type="submit" name="page" value="index">Index
         </button>
     </a>
     {% if not app.user %}
         <a href="{{ path('register_page') }}">
-            <button class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                    type="submit" name="page" value="register">Register
-            </button>
+            <button class="base-button" type="submit" name="page" value="register">Register</button>
         </a>
 
-        <a href="{{ path('login_page') }}">
-            <button class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                    type="submit" name="page" value="login">Login
-            </button>
+        <a href="{{ path('app_login') }}">
+            <button class="base-button" type="submit" name="page" value="login">Login</button>
         </a>
         <a href="{{ path('password_failed_page') }}">
-            <button class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                    type="submit" name="page" value="password-failed">Reset Password
-            </button>
+            <button class="base-button" type="submit" name="page" value="password-failed">Reset Password</button>
         </a>
 
 
     {% else %}
-        <a href="index.php/?page=logout">
-            <button type="submit" name="page" value="logout">Logout</button>
+        <a href="{{ path('app_logout') }}">
+            <button class="base-button" type="submit" name="page" value="logout">Logout</button>
         </a>
 
         <a href="{{ path('favorite-page') }}">
-            <button type="submit" name="page" value="favorites">Favorites</button>
+            <button class="base-button" type="submit" name="page" value="favorites">Favorites</button>
         </a>
 
         <a href="index.php/?page=cart">
-            <button type="submit" name="page" value="cart">Cart</button>
+            <button class="base-button" type="submit" name="page" value="cart">Cart</button>
         </a>
 
 
-        <h1> Welcome: {{ userDto.firstName }}</h1>
+        <h1> Welcome: {{  app.user.firstName }}</h1>
     {% endif %}
 {% endblock %}
 {% block body %}{% endblock %}

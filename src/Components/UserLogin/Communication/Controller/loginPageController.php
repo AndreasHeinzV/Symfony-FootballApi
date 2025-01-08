@@ -50,9 +50,7 @@ class loginPageController extends AbstractController
             return $this->render('userLogin/loginPage.html.twig', ['login_form' => $form]);
         }
     */
-    /**
-     * @Route("/login", name="app_login", methods={"GET", "POST"})
-     */
+
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -69,11 +67,5 @@ class loginPageController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/logout", name="app_logout", methods={"GET"})
-     */
-    public function logout(): void
-    {
-        throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall.');
-    }
+
 }

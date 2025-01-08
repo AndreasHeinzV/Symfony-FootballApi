@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegisterForm extends AbstractType
 {
@@ -66,11 +67,9 @@ class RegisterForm extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank(),
-                    new Length([
-                        'min' => 8,
-                        'max' => 50,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        'maxMessage' => 'Your password cannot be longer than {{ limit }} characters',
+                    new Regex([
+                        'pattern' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/",
+                        'message' => 'Password is not valid',
                     ]),
                 ],
             ])
