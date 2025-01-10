@@ -13,7 +13,9 @@
                     hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700
                     dark:border-gray-600 dark:hover:bg-gray-600
                     dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white">
-                        <a href="{{ path('league_detail', {'leagueName': league.name}) }}{{ league.link }}">Go to {{ league.name }}</a>
+                        <a href="{{ path('league_detail', {'leagueName': league.name, 'leagueId': league.leagueId}) }}">Go
+                            to {{ league.name }}</a>
+
 
                     </li>
                 {% endfor %}

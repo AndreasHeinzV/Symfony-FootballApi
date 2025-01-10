@@ -17,5 +17,5 @@ interface UserFavoriteEntityManagerInterface
         int $positionToChange,
     ): void;
 
-    public function deleteUserFavorite(User $user, string $id): void;
+    public function deleteUserFavorite(User $user, int $teamId): void;
 }

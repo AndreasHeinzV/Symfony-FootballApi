@@ -1,22 +1,22 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <table>
-        <tr>
-            <th>Position</th>
-            <th>Team</th>
-            <th>Played</th>
-            <th>Won</th>
-            <th>Draw</th>
-            <th>Lost</th>
-            <th>Points</th>
-            <th>GoalsFor</th>
-            <th>GoalsAgainst</th>
-            <th>GoalsDifference</th>
-        </tr>
-        {% for team in teams %}
-            <tr>
-                <td>{{ team.position }} </td>
-                <td><a href="{{ path('team_details', {'teamName': team.name}) }}{{ team.link }}">{{ team.name }}</a>
+<table>
+    <tr>
+        <th>Position</th>
+        <th>Team</th>
+        <th>Played</th>
+        <th>Won</th>
+        <th>Draw</th>
+        <th>Lost</th>
+        <th>Points</th>
+        <th>GoalsFor</th>
+        <th>GoalsAgainst</th>
+        <th>GoalsDifference</th>
+    </tr>
+    {% for team in teams %}
+    <tr>
+        <td>{{ team.position }} </td>
+        <td><a href="{{ path('team_details', {'teamName': team.name, 'teamId': team.teamId})}}">{{ team.name }}</a>
                 </td>
                 <td> {{ team.playedGames }}</td>
                 <td> {{ team.won }} </td>

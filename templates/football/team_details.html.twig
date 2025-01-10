@@ -1,37 +1,40 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <form action="" method="POST">
-        {% if players is not empty %}
-            <h1>Team: {{ players.teamName }}
+
+    {% if players is not empty %}
+        <h1>Team: {{ players.teamName }}
 
 
 
-                {% if app.user %}
-                    {% if favoriteStatus %}
-                        <button class="base-button" type="submit" value="{{ players.teamID }}" name="delete">delete</button>
-                    {% else %}
-                        <button class="base-button" type="submit" value="{{ players.teamID }}" name="add">add</button>
-                    {% endif %}
+            {% if status %}
+                {% if favoriteStatus %}
+                    <a href="{{ url('team_details_delete',{'teamId':players.teamID, 'teamName':players.teamName}) }}"
+                       class="base-button"
+                       type="submit">delete</a>
+                {% else %}
+                    <a href="{{ url('team_details_add', {'teamId':players.teamID, 'teamName':players.teamName}) }}"
+                       class="base-button"
+                       type="submit">add</a>
                 {% endif %}
-            </h1>
+            {% endif %}
+        </h1>
 
-            <ul>
+        <ul>
 
-                {% for player in players.squad %}
+            {% for player in players.squad %}
 
 
-                    <li>
-                        <a href="{{ path('player_details', {'teamName': players.teamName, 'playerName': player.name}) }}{{ player.link }}">{{ player.name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-            <a href="/?page=shop&teamId={{ players.teamID }}&teamName={{ players.teamName | url_encode }}"
-               class="button">View
-                Products</a>
-        {% else %}
+                <li>
+                    <a href="{{ path('player_details', {'teamName': players.teamName, 'playerName': player.name}) }}{{ player.link }}">{{ player.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="/?page=shop&teamId={{ players.teamID }}&teamName={{ players.teamName | url_encode }}"
+           class="button">View
+            Products</a>
+    {% else %}
 
-            <h1> Page not found return to homepage</h1>
-            <a href="/">Index</a>
-        {% endif %}
-    </form>
+        <h1> Page not found return to homepage</h1>
+        <a href="/">Index</a>
+    {% endif %}
 {% endblock %}

@@ -6,7 +6,7 @@ use App\Components\Football\Persitence\DTOs\PlayerDto;
 
 interface ApiRequestFacadeInterface
 {
-    public function getTeam(string $id): array;
+    public function getTeam(int $id): array;
 
     public function getLeagueTeams(string $code): array;
 

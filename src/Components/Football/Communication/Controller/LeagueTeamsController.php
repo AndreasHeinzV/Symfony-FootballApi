@@ -16,22 +16,13 @@ class LeagueTeamsController extends AbstractController
     {
     }
 
-    #[Route('/league/{leagueName}', name: 'league_detail')]
-    public function index(Request $request): Response
+    #[Route('/{leagueName}/{leagueId}', name: 'league_detail')]
+    public function index(Request $request, string $leagueId): Response
     {
-        // dd($request);
-
-        $page = $request->query->get('page');
-
-
-
-        if ('competitions' !== $page) {
-            return $this->redirectToRoute('pageNotFound', ['page' => $page]);
-        }
 
         return $this->render(
             'football/leagueTeams.html.twig',
-            ['teams' => $this->footballBusinessFacade->getLeagueTeams($request->get('name'))]
+            ['teams' => $this->footballBusinessFacade->getLeagueTeams($leagueId)]
         );
     }
 }

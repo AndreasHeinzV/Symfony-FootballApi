@@ -8,7 +8,7 @@ class FavoriteMapper
 {
     public function createFavoriteDTO(array $favoriteData): FavoriteDTO
     {
-        return new favoriteDTO(
+        return new FavoriteDTO(
             $favoriteData['teamID'],
             $favoriteData['teamName'],
             $favoriteData['crest'],

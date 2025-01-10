@@ -13,7 +13,7 @@ class LeagueTeamsMapper implements LeagueTeamsMapperInterface
         return new LeagueTeamsDto(
             $leagueData['position'],
             $leagueData['name'],
-            $leagueData['link'],
+            $leagueData['teamId'],
             $leagueData['playedGames'],
             $leagueData['won'],
             $leagueData['draw'],
@@ -30,7 +30,7 @@ class LeagueTeamsMapper implements LeagueTeamsMapperInterface
         return [
             'position' => $leagueTeamsDto->position,
             'name' => $leagueTeamsDto->name,
-            'link' => $leagueTeamsDto->link,
+            'teamId' => $leagueTeamsDto->teamId,
             'playedGames' => $leagueTeamsDto->playedGames,
             'won' => $leagueTeamsDto->won,
             'draw' => $leagueTeamsDto->draw,

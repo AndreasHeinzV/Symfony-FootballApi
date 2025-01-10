@@ -10,7 +10,7 @@ interface FootballBusinessFacadeInterface
 
     public function getLeagueTeams(string $code): array;
 
-    public function getTeam(string $id): array;
+    public function getTeam(int $id): array;
 
     public function getPlayer(string $id): ?PlayerDto;
 }

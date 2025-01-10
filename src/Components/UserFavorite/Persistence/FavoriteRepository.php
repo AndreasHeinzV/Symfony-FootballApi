@@ -18,7 +18,7 @@ class FavoriteRepository extends ServiceEntityRepository implements UserFavorite
     }
 
     //    /**
-    //     * @return Favorite[] Returns an array of Favorite objects
+    //     * @return FavoriteCalc[] Returns an array of FavoriteCalc objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -32,7 +32,7 @@ class FavoriteRepository extends ServiceEntityRepository implements UserFavorite
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Favorite
+    //    public function findOneBySomeField($value): ?FavoriteCalc
     //    {
     //        return $this->createQueryBuilder('f')
     //            ->andWhere('f.exampleField = :val')
@@ -81,7 +81,7 @@ class FavoriteRepository extends ServiceEntityRepository implements UserFavorite
         ]);
     }
 
-    public function getUserFavoritesFirstPosition(int $userId, int $position): int|false
+    public function getUserFavoritesFirstPosition(int $userId): int|false
     {
         $user = $this->getEntityManager()->getReference(User::class, $userId);
 
@@ -132,6 +132,7 @@ class FavoriteRepository extends ServiceEntityRepository implements UserFavorite
 
         return false;
     }
+
     public function getFavoritePositionBelowCurrentPosition(int $userId, int $position): int|false
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -142,7 +143,7 @@ class FavoriteRepository extends ServiceEntityRepository implements UserFavorite
             ->andWhere('f.favoritePosition > :favoritePosition')
             ->setParameter('userId', $userId)
             ->setParameter('favoritePosition', $position)
-            ->orderBy('f.favoritePosition', 'DESC')
+            ->orderBy('f.favoritePosition', 'ASC')
             ->setMaxResults(1);
 
         $result = $qb->getQuery()->getOneOrNullResult();
@@ -163,6 +164,4 @@ class FavoriteRepository extends ServiceEntityRepository implements UserFavorite
             'favoritePosition' => $position,
         ]);
     }
-
-
 }

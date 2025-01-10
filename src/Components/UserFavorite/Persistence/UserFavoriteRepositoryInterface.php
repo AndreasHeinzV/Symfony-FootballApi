@@ -10,9 +10,9 @@ interface UserFavoriteRepositoryInterface
 {
     public function getUserFavorites(int $userId): array;
 
-    public function getUserFavoriteByTeamId(User $user, int $teamId): ?Favorite;
+    public function getUserFavoriteByTeamId(int $userId, int $teamId): ?Favorite;
 
-    public function getUserFavoritesFirstPosition(int $userId, int $position): int|false;
+    public function getUserFavoritesFirstPosition(int $userId): int|false;
 
     public function getUserFavoritesLastPosition(int $userId): int|false;
 

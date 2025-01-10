@@ -4,26 +4,25 @@ declare(strict_types=1);
 
 namespace App\Components\Football\Persitence\Mapper;
 
-use App\Components\Football\Persitence\DTOs\LeaguesDTO;
+use App\Components\Football\Persitence\DTOs\LeaguesDto;
 
 class LeaguesMapper implements LeaguesMapperInterface
 {
-
-    public function createLeaguesDTO(array $leaguesData): LeaguesDTO
+    public function createLeaguesDTO(array $leaguesData): LeaguesDto
     {
-        return new leaguesDTO(
+        return new LeaguesDto(
             $leaguesData['id'],
             $leaguesData['name'],
-            $leaguesData['link']
+            $leaguesData['leagueId']
         );
     }
 
-    public function getLeaguesData(LeaguesDTO $leaguesDTO): array
+    public function getLeaguesData(LeaguesDto $leaguesDto): array
     {
         return [
-            'id' => $leaguesDTO->id,
-            'name' => $leaguesDTO->name,
-            'link' => $leaguesDTO->link,
+            'id' => $leaguesDto->id,
+            'name' => $leaguesDto->name,
+            'leagueId' => $leaguesDto->leagueId,
         ];
     }
 }

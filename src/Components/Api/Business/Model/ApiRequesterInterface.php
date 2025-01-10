@@ -8,7 +8,7 @@ interface ApiRequesterInterface
 {
     public function apiRequest(string $url): array;
 
-    public function getTeam(string $id): array;
+    public function getTeam(int $id): array;
 
     public function getLeagueTeams(string $code): array;
 

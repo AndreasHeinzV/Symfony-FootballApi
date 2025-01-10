@@ -23,7 +23,7 @@ readonly class FootballBusinessFacade implements FootballBusinessFacadeInterface
         return $this->apiRequestFacade->getLeagueTeams($code);
     }
 
-    public function getTeam(string $id): array
+    public function getTeam(int $id): array
     {
         return $this->apiRequestFacade->getTeam($id);
     }

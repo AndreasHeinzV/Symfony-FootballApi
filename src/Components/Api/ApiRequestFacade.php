@@ -14,7 +14,7 @@ readonly class ApiRequestFacade implements ApiRequestFacadeInterface
     {
     }
 
-    public function getTeam(string $id): array
+    public function getTeam(int $id): array
     {
         return $this->apiRequester->getTeam($id);
     }

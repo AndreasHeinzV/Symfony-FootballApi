@@ -1,0 +1,51 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Tests\Components\Football\Communication;
+
+use App\Components\Api\Business\Model\ApiRequesterInterface;
+use App\Components\Football\Persitence\Mapper\LeaguesMapper;
+use App\Components\Football\Persitence\Mapper\LeagueTeamsMapper;
+use App\Components\Football\Persitence\Mapper\PlayerMapper;
+use App\Components\Football\Persitence\Mapper\TeamMapper;
+use App\Tests\Fixtures\ApiRequest\ApiRequestFaker;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+class HomePageControllerTest extends WebTestCase
+{
+    private $client;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->client = static::createClient();
+        $container = static::getContainer();
+        $apiRequesterFaker = new ApiRequestFaker(
+            $container->get(PlayerMapper::class),
+            $container->get(TeamMapper::class),
+            $container->get(LeaguesMapper::class),
+            $container->get(LeagueTeamsMapper::class),
+        );
+        $container->set(ApiRequesterInterface::class, $apiRequesterFaker);
+    }
+
+    public function testGetLeagues(): void
+    {
+        $crawler = $this->client->request('GET', '/');
+
+        $container = $this->client->getContainer();
+        $apiRequester = $container->get(ApiRequesterInterface::class);
+        $leagues = $apiRequester->getLeagues();
+
+        $amount = $crawler->count();
+        self::assertResponseIsSuccessful();
+        $linkCrawler = $crawler->filterXPath('//a[contains(., "Bundesliga")]');
+        $this->assertGreaterThan(0, $linkCrawler->count(), 'The link containing "Bundesliga" should exist.');
+        $hrefCheck = $crawler->filter('a[href$="BL1"]');
+        $this->assertGreaterThan(0, $hrefCheck->count(), 'The href ending with "BL1" should exist.');
+
+
+
+    }
+}

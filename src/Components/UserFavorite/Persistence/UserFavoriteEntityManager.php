@@ -41,10 +41,10 @@ readonly class UserFavoriteEntityManager implements UserFavoriteEntityManagerInt
         $this->entityManager->flush();
     }
 
-    public function deleteUserFavorite(User $user, string $id): void
+    public function deleteUserFavorite(User $user, int $teamId): void
     {
         $favoriteEntity = $this->entityManager->getRepository(Favorite::class)->findOneBy(
-            ['user' => $user, 'teamId' => $id]
+            ['user' => $user, 'teamId' => $teamId]
         );
 
         if (null !== $favoriteEntity) {
