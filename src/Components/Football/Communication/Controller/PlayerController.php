@@ -17,12 +17,6 @@ class PlayerController extends AbstractController
     #[Route('team/{teamName}/player/{playerName}', name: 'player_details')]
     public function index(Request $request): Response
     {
-        $page = $request->query->get('page');
-        /*
-                if ('player' !== $page) {
-                    return $this->redirectToRoute('pageNotFound');
-                }
-        */
         return $this->render('football/player_details.html.twig', [
             'playerData' => $this->footballBusinessFacade->getPlayer($request->query->get('id')),
         ]);

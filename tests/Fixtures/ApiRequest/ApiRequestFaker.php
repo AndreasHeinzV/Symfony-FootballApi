@@ -112,7 +112,6 @@ readonly class ApiRequestFaker implements ApiRequesterInterface
         if (empty($this->apiRequest($uri))) {
             return null;
         }
-
         return $this->playerMapper->createTeamDTO($this->apiRequest($uri));
     }
 }
