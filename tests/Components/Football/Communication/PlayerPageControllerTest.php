@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Components\Football\Communication;
 
 use App\Components\Api\Business\Model\ApiRequesterInterface;
-use App\Components\Football\Communication\Controller\PlayerController;
 use App\Components\Football\Persitence\Mapper\LeaguesMapper;
 use App\Components\Football\Persitence\Mapper\LeagueTeamsMapper;
 use App\Components\Football\Persitence\Mapper\PlayerMapper;
@@ -34,12 +33,13 @@ class PlayerPageControllerTest extends WebTestCase
 
     public function testSomething(): void
     {
-        // (1) boot the Symfony kernel
         self::bootKernel();
 
         $this->client->request('GET', '/team/Eintracht%20Frankfurt/player/Kaua?page=player&id=189482');
 
         $response = $this->client->getResponse();
-        dd($response);
+        $responseContent = $response->getContent();
+        self::assertResponseIsSuccessful($responseContent);
+        self::assertStringContainsString('Kaua', $responseContent);
     }
 }

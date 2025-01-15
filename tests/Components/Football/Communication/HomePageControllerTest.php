@@ -10,11 +10,12 @@ use App\Components\Football\Persitence\Mapper\LeagueTeamsMapper;
 use App\Components\Football\Persitence\Mapper\PlayerMapper;
 use App\Components\Football\Persitence\Mapper\TeamMapper;
 use App\Tests\Fixtures\ApiRequest\ApiRequestFaker;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class HomePageControllerTest extends WebTestCase
 {
-    private $client;
+    private KernelBrowser $client;
 
     protected function setUp(): void
     {
@@ -33,19 +34,11 @@ class HomePageControllerTest extends WebTestCase
     public function testGetLeagues(): void
     {
         $crawler = $this->client->request('GET', '/');
-
-        $container = $this->client->getContainer();
-        $apiRequester = $container->get(ApiRequesterInterface::class);
-        $leagues = $apiRequester->getLeagues();
-
-        $amount = $crawler->count();
         self::assertResponseIsSuccessful();
         $linkCrawler = $crawler->filterXPath('//a[contains(., "Bundesliga")]');
         $this->assertGreaterThan(0, $linkCrawler->count(), 'The link containing "Bundesliga" should exist.');
         $hrefCheck = $crawler->filter('a[href$="BL1"]');
         $this->assertGreaterThan(0, $hrefCheck->count(), 'The href ending with "BL1" should exist.');
-
-
-
     }
+
 }

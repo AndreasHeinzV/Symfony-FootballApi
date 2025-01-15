@@ -8,9 +8,9 @@ use App\Components\UserFavorite\Business\UserFavoriteBusinessFacadeInterface;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[Route('/team/{teamName}/{teamId}')]
 class TeamDetailsController extends AbstractController
@@ -26,16 +26,11 @@ class TeamDetailsController extends AbstractController
     #[Route('', name: 'team_details')]
     public function index(string $teamId): Response
     {
-        $user = null;
-        if ($this->security->getUser() !== null) {
-            $user = $this->userBusinessFacade->getUserEntity($this->security->getUser());
-        }
+        $user = $this->security->getUser();
+        $userEntity = ($user instanceof UserInterface) ? $this->userBusinessFacade->getUserEntity($user) : null;
+        $status = null !== $userEntity;
 
-        $status = null !== $user;
-        $favoriteStatus = null;
-        if ($status) {
-            $favoriteStatus = $this->userFavoriteBusinessFacade->getFavoriteStatus($user, $teamId);
-        }
+        $favoriteStatus = $status ? $this->userFavoriteBusinessFacade->getFavoriteStatus($user, $teamId) : null;
 
         return $this->render('football/team_details.html.twig', [
             'players' => $this->footballBusinessFacade->getTeam($teamId),

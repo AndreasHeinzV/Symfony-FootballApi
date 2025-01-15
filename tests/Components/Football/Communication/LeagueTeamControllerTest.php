@@ -33,17 +33,12 @@ class LeagueTeamControllerTest extends WebTestCase
 
     public function testGetLeagueTeam(): void
     {
-        // This calls KernelTestCase::bootKernel(), and creates a
-        // "client" that is acting as the browser
-
-
-        // Request a specific page
-        $crawler = $this->client->request('GET', '/');
-
-        // Validate a successful response and some content
+        $this->client->request('GET', '/Campeonato%20Brasileiro%20S%C3%A9rie%20A/BSA');
+        $response = $this->client->getResponse();
+        $content = $response->getContent();
         self::assertResponseIsSuccessful();
+        self::assertStringContainsString('Mineiro', $content);
+        self::assertStringContainsString('18', $content);
 
-
-        //   $this->assertGreaterThan(0, $crawler->filter('html:contains("Hello World")')->count());
     }
 }
