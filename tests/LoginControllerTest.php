@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Tests;
 
 use App\Entity\User;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -11,30 +13,15 @@ class LoginControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
 
+    private EntityManagerInterface $em;
+
+    private EntityRepository $userRepository;
+
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        $container = static::getContainer();
-        $em = $container->get('doctrine.orm.entity_manager');
-        $userRepository = $em->getRepository(User::class);
-
-        // Remove any existing users from the test database
-        foreach ($userRepository->findAll() as $user) {
-            $em->remove($user);
-        }
-
-        $em->flush();
-
-        // Create a User fixture
-        /** @var UserPasswordHasherInterface $passwordHasher */
-        $passwordHasher = $container->get('security.user_password_hasher');
-
-        $user = (new User())->setEmail('email@example.com');
-        $user->setPassword($passwordHasher->hashPassword($user, 'password'));
-
-        $em->persist($user);
-        $em->flush();
     }
+
 
     public function testLogin(): void
     {
@@ -58,7 +45,7 @@ class LoginControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         $this->client->submitForm('Sign in', [
-            '_username' => 'email@example.com',
+            '_username' => 'user1@example.com',
             '_password' => 'bad-password',
         ]);
 
@@ -70,11 +57,11 @@ class LoginControllerTest extends WebTestCase
 
         // Success - Login with valid credentials is allowed.
         $this->client->submitForm('Sign in', [
-            '_username' => 'email@example.com',
-            '_password' => 'password',
+            '_username' => 'user1@example.com',
+            '_password' => 'password1',
         ]);
 
-        self::assertResponseRedirects('/');
+        self::assertResponseRedirects('/register-page');
         $this->client->followRedirect();
 
         self::assertSelectorNotExists('.alert-danger');

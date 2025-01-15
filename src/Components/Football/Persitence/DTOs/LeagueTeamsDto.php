@@ -9,7 +9,7 @@ readonly class LeagueTeamsDto
     public function __construct(
         public int $position,
         public string $name,
-        public string $teamId,
+        public int $teamId,
         public int $playedGames,
         public int $won,
         public int $draw,

@@ -104,7 +104,7 @@ readonly class ApiRequester implements ApiRequesterInterface
             $team = [];
             $team['position'] = $table['position'];
             $team['name'] = $table['team']['name'];
-            $team['teamId'] = (string) $table['team']['id'];
+            $team['teamId'] = $table['team']['id'];
             $team['playedGames'] = $table['playedGames'];
             $team['won'] = $table['won'];
             $team['draw'] = $table['draw'];

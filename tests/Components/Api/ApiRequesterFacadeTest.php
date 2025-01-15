@@ -31,7 +31,7 @@ class ApiRequesterFacadeTest extends TestCase
 
     public function testGetTeam(): void
     {
-        $teamId = '3984';
+        $teamId = 3984;
         $team = $this->apiRequestFacade->getTeam($teamId);
 
         self::assertNotEmpty($team);

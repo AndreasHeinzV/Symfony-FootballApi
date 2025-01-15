@@ -26,7 +26,11 @@ class TeamDetailsController extends AbstractController
     #[Route('', name: 'team_details')]
     public function index(string $teamId): Response
     {
-        $user = $this->userBusinessFacade->getUserEntity($this->security->getUser());
+        $user = null;
+        if ($this->security->getUser() !== null) {
+            $user = $this->userBusinessFacade->getUserEntity($this->security->getUser());
+        }
+
         $status = null !== $user;
         $favoriteStatus = null;
         if ($status) {
