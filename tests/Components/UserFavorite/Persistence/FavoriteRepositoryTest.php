@@ -22,7 +22,8 @@ class FavoriteRepositoryTest extends WebTestCase
 
     public function testGetAllFavorites(): void
     {
-        $favorites = $this->repository->getAllFavorites();
+        $favorites = $this->repository->getUserFavorites(1);
         self::assertNotEmpty($favorites);
+      //  dd($favorites);
     }
 }
