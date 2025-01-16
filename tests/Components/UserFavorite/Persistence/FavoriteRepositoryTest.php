@@ -7,18 +7,18 @@ namespace App\Tests\Components\UserFavorite\Persistence;
 use App\Components\UserFavorite\Persistence\FavoriteDTO;
 use App\Components\UserFavorite\Persistence\FavoriteRepository;
 use App\Entity\Favorite;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\BaseTestCase;
 
-class FavoriteRepositoryTest extends WebTestCase
+
+class FavoriteRepositoryTest extends BaseTestCase
 {
     private FavoriteRepository $repository;
 
     protected function setUp(): void
     {
+        parent::setUp();
         self::bootKernel();
-
         $container = static::getContainer();
-
         $this->repository = $container->get(FavoriteRepository::class);
     }
 
@@ -97,5 +97,4 @@ class FavoriteRepositoryTest extends WebTestCase
         $favoriteEntity = $this->repository->getUserFavoriteEntityByPosition(2, 6);
         self::assertNull($favoriteEntity);
     }
-
 }

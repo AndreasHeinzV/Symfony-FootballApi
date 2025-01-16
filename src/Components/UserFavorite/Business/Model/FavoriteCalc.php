@@ -89,7 +89,6 @@ readonly class FavoriteCalc implements FavoriteCalcInterface
     public function userFavoriteDown(User $user, int $teamId): void
     {
         $userId = $user->getId();
-
         $userFavoriteEntity = $this->userFavoriteRepository->getUserFavoriteByTeamId($userId, $teamId);
 
         if ($userFavoriteEntity instanceof Favorite) {

@@ -31,11 +31,10 @@ readonly class UserFavoriteEntityManager implements UserFavoriteEntityManagerInt
     public function updateUserFavoritePosition(
         Favorite $favoriteEntity,
         Favorite $favoriteEntityChange,
-        int $position,
-        int $positionToChange,
     ): void {
-        $favoriteEntity->setFavoritePosition($positionToChange);
-        $favoriteEntityChange->setFavoritePosition($position);
+        $positionT = $favoriteEntity->getFavoritePosition();
+        $favoriteEntity->setFavoritePosition($favoriteEntityChange->getFavoritePosition());
+        $favoriteEntityChange->setFavoritePosition($positionT);
         $this->entityManager->persist($favoriteEntity);
         $this->entityManager->persist($favoriteEntityChange);
         $this->entityManager->flush();

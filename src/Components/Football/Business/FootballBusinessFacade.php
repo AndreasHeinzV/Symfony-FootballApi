@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Components\Football\Business;
 
-use App\Components\Api\Business\ApiRequestFacadeInterface;
+use App\Components\Api\ApiRequestFacadeInterface;
 use App\Components\Football\Persitence\DTOs\PlayerDto;
 
 readonly class FootballBusinessFacade implements FootballBusinessFacadeInterface

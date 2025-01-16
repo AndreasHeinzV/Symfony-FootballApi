@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Components\Api;
 
-use App\Components\Api\Business\ApiRequestFacadeInterface;
 use App\Components\Api\Business\Model\ApiRequesterInterface;
 use App\Components\Football\Persitence\DTOs\PlayerDto;
 

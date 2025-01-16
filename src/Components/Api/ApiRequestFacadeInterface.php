@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\Api\Business;
+namespace App\Components\Api;
 
 use App\Components\Football\Persitence\DTOs\PlayerDto;
 
