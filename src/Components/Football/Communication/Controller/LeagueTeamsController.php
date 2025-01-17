@@ -17,7 +17,7 @@ class LeagueTeamsController extends AbstractController
     }
 
     #[Route('/{leagueName}/{leagueId}', name: 'league_detail')]
-    public function index(Request $request, string $leagueId): Response
+    public function index(string $leagueId): Response
     {
 
         return $this->render(

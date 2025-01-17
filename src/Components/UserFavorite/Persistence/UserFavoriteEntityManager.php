@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Components\UserFavorite\Persistence;
 
-use App\Components\User\Persistence\UserDto;
 use App\Entity\Favorite;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -50,5 +49,10 @@ readonly class UserFavoriteEntityManager implements UserFavoriteEntityManagerInt
             $this->entityManager->remove($favoriteEntity);
             $this->entityManager->flush();
         }
+    }
+
+    public function refresh(object $entity): void
+    {
+        $this->entityManager->refresh($entity);
     }
 }

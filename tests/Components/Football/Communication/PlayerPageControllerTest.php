@@ -31,7 +31,7 @@ class PlayerPageControllerTest extends WebTestCase
         $container->set(ApiRequesterInterface::class, $apiRequesterFaker);
     }
 
-    public function testSomething(): void
+    public function testGetPlayer(): void
     {
         self::bootKernel();
 

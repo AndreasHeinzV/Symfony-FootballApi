@@ -15,7 +15,6 @@ use App\Components\UserFavorite\Persistence\FavoriteDTO;
 use App\Components\UserFavorite\Persistence\FavoriteRepository;
 use App\Tests\BaseTestCase;
 use App\Tests\Fixtures\ApiRequest\ApiRequestFaker;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class FavoriteCalcTest extends BaseTestCase
 {

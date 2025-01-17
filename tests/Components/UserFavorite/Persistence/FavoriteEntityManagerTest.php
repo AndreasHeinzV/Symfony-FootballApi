@@ -9,7 +9,6 @@ use App\Components\UserFavorite\Persistence\FavoriteDTO;
 use App\Components\UserFavorite\Persistence\FavoriteRepository;
 use App\Components\UserFavorite\Persistence\UserFavoriteEntityManager;
 use App\Tests\BaseTestCase;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class FavoriteEntityManagerTest extends BaseTestCase
 {
@@ -27,7 +26,6 @@ class FavoriteEntityManagerTest extends BaseTestCase
         $this->userRepository = $container->get(UserRepository::class);
         $this->entityManager = $container->get(UserFavoriteEntityManager::class);
     }
-
 
     public function testSaveUserFavorite(): void
     {
@@ -56,14 +54,14 @@ class FavoriteEntityManagerTest extends BaseTestCase
 
     public function testUpdateUserFavoritePosition(): void
     {
-        $userEntity = $this->userRepository->findUserByMail('user1@example.com');
-
         $favoriteEntityOne = $this->repository->getUserFavoriteByTeamId(1, 1);
+        $position = $favoriteEntityOne->getFavoritePosition();
         $favoriteEntityTwo = $this->repository->getUserFavoriteByTeamId(1, 2);
-
         $this->entityManager->updateUserFavoritePosition($favoriteEntityOne, $favoriteEntityTwo);
-
         $favoriteEntityOneAfter = $this->repository->getUserFavoriteByTeamId(1, 1);
-        self::assertNotSame($favoriteEntityOne->getFavoritePosition(), $favoriteEntityOneAfter->getFavoritePosition());
+        $this->entityManager->refresh($favoriteEntityOne);
+
+        self::assertNotSame($position, $favoriteEntityOneAfter->getFavoritePosition());
     }
+
 }
