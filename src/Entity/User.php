@@ -45,22 +45,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'userId', orphanRemoval: true)]
     private Collection $products;
 
-    /**
-     * @var Collection<int, ResetPassword>
-     */
-    #[ORM\OneToMany(targetEntity: ResetPassword::class, mappedBy: 'userId', orphanRemoval: true)]
-    private Collection $resetPasswords;
-
-    /**
-     * @var Collection<int, Favorite>
-     */
     #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'userId', orphanRemoval: true)]
     private Collection $favorites;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
-        $this->resetPasswords = new ArrayCollection();
         $this->favorites = new ArrayCollection();
     }
 
@@ -141,36 +131,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($product->getUserId() === $this) {
                 $product->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ResetPassword>
-     */
-    public function getResetPasswords(): Collection
-    {
-        return $this->resetPasswords;
-    }
-
-    public function addResetPassword(ResetPassword $resetPassword): static
-    {
-        if (!$this->resetPasswords->contains($resetPassword)) {
-            $this->resetPasswords->add($resetPassword);
-            $resetPassword->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeResetPassword(ResetPassword $resetPassword): static
-    {
-        if ($this->resetPasswords->removeElement($resetPassword)) {
-            // set the owning side to null (unless already changed)
-            if ($resetPassword->getUser() === $this) {
-                $resetPassword->setUser(null);
             }
         }
 

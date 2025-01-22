@@ -22,7 +22,6 @@ interface Config
 
     public const FAVORITE_POSITION_ONE = 1;
     public const FAVORITE_POSITION_TWO = 2;
-
     public const FAVORITE_POSITION_THREE = 3;
 
     public const FAVORITE_TEAM_NAME_ONE = 'team1';
