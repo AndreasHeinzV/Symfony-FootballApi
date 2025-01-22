@@ -2,6 +2,7 @@
 
 namespace App\Tests\Components\UserLogin;
 
+use App\Tests\Fixtures\Config;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -43,7 +44,7 @@ class LoginControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         $this->client->submitForm('Sign in', [
-            '_username' => 'user1@example.com',
+            '_username' => Config::USER_EMAIL_ONE,
             '_password' => 'bad-password',
         ]);
 
@@ -55,8 +56,8 @@ class LoginControllerTest extends WebTestCase
 
         // Success - Login with valid credentials is allowed.
         $this->client->submitForm('Sign in', [
-            '_username' => 'user1@example.com',
-            '_password' => 'password1',
+            '_username' => Config::USER_EMAIL_ONE,
+            '_password' => Config::USER_PASSWORD_ONE,
         ]);
 
         self::assertResponseRedirects('/register-page');

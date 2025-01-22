@@ -6,6 +6,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Favorite;
 use App\Entity\User;
+use App\Tests\Fixtures\Config;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -22,9 +23,24 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $users = [
-            ['firstName' => 'User1', 'lastName' => 'Name1', 'email' => 'user1@example.com', 'password' => 'password1'],
-            ['firstName' => 'User2', 'lastName' => 'Name2', 'email' => 'user2@example.com', 'password' => 'password2'],
-            ['firstName' => 'User3', 'lastName' => 'Name3', 'email' => 'user3@example.com', 'password' => 'password3'],
+            [
+                'firstName' => Config::USER_FIRST_NAME_ONE,
+                'lastName' => Config::USER_LAST_NAME_ONE,
+                'email' => Config::USER_EMAIL_ONE,
+                'password' => Config::USER_PASSWORD_ONE,
+            ],
+            [
+                'firstName' => Config::USER_FIRST_NAME_TWO,
+                'lastName' => Config::USER_LAST_NAME_TWO,
+                'email' => Config::USER_EMAIL_TWO,
+                'password' => Config::USER_PASSWORD_TWO,
+            ],
+            [
+                'firstName' => Config::USER_FIRST_NAME_THREE,
+                'lastName' => Config::USER_LAST_NAME_THREE,
+                'email' => Config::USER_EMAIL_THREE,
+                'password' => Config::USER_PASSWORD_THREE,
+            ],
         ];
         $userEntities = [];
 
@@ -42,9 +58,24 @@ class UserFixtures extends Fixture
         }
 
         $firstUserFavorites = [
-            ['favoritePosition' => 1, 'teamName' => 'team1', 'teamCrest' => 'teamCrestLink1', 'teamId' => 1],
-            ['favoritePosition' => 2, 'teamName' => 'team2', 'teamCrest' => 'teamCrestLink2', 'teamId' => 2],
-            ['favoritePosition' => 3, 'teamName' => 'team3', 'teamCrest' => 'teamCrestLink3', 'teamId' => 3],
+            [
+                'favoritePosition' => Config::FAVORITE_POSITION_ONE,
+                'teamName' => Config::FAVORITE_TEAM_NAME_ONE,
+                'teamCrest' => Config::FAVORITE_TEAM_CREST_ONE,
+                'teamId' => Config::FAVORITE_TEAM_ID_ONE,
+            ],
+            [
+                'favoritePosition' => Config::FAVORITE_POSITION_TWO,
+                'teamName' => Config::FAVORITE_TEAM_NAME_TWO,
+                'teamCrest' => Config::FAVORITE_TEAM_CREST_TWO,
+                'teamId' => Config::FAVORITE_TEAM_ID_TWO,
+            ],
+            [
+                'favoritePosition' => Config::FAVORITE_POSITION_THREE,
+                'teamName' => Config::FAVORITE_TEAM_NAME_THREE,
+                'teamCrest' => Config::FAVORITE_TEAM_CREST_THREE,
+                'teamId' => Config::FAVORITE_TEAM_ID_THREE,
+            ],
         ];
 
         foreach ($firstUserFavorites as $favoriteData) {
@@ -56,7 +87,6 @@ class UserFixtures extends Fixture
             $favorite->setTeamId($favoriteData['teamId']);
             $manager->persist($favorite);
         }
-
         $manager->flush();
     }
 }

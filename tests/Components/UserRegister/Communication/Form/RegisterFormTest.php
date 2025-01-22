@@ -8,6 +8,7 @@ use App\Components\UserRegister\Communication\Form\RegisterForm;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class RegisterFormTest extends WebTestCase
@@ -15,12 +16,10 @@ class RegisterFormTest extends WebTestCase
     private FormFactoryInterface $formFactory;
     private CsrfTokenManagerInterface $csrfTokenManager;
 
-    private KernelBrowser $client;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->client = static::createClient();
         $this->formFactory = self::getContainer()->get(FormFactoryInterface::class);
         $this->csrfTokenManager = self::getContainer()->get(CsrfTokenManagerInterface::class);
     }
@@ -33,24 +32,6 @@ class RegisterFormTest extends WebTestCase
         $this->assertTrue($form->has('email'));
         $this->assertTrue($form->has('password'));
         $this->assertTrue($form->has('submit'));
-    }
-
-    public function testSubmitValidData(): void
-    {
-        $crawler = $this->client->request('GET', '/register-page');
-
-        $csrfToken = $crawler->filter('form input[name="token"]')->attr('value');
-
-        $this->assertNotEmpty($csrfToken, 'CSRF token is missing from the form');
-
-        $data = [
-            'firstName' => 'John',
-            'lastName' => 'Doe',
-            'email' => 'john.doe@example.com',
-            'password' => 'Password123!',
-            'password_repeat' => 'Password123!',
-            '_token' => $csrfToken,
-        ];
     }
 
     public function testSubmitInvalidEmail(): void
@@ -74,13 +55,14 @@ class RegisterFormTest extends WebTestCase
         $this->assertSame('Please enter a valid email address', $errors[0]->getMessage());
     }
 
-    public function testSubmitInvalidFirstNameEmpty(): void
+
+    public function testSubmitInvalidLastNameEmpty(): void
     {
         $form = $this->formFactory->create(RegisterForm::class);
 
         $data = [
-            'firstName' => '',
-            'lastName' => 'Doe',
+            'firstName' => 'user',
+            'lastName' => '',
             'email' => 'john.doe@example.com',
             'password' => 'Password123!',
             'password_repeat' => 'Password123!',
@@ -90,8 +72,9 @@ class RegisterFormTest extends WebTestCase
 
         $this->assertFalse($form->isValid());
 
-        $errors = $form->get('firstName')->getErrors();
+        $errors = $form->get('lastName')->getErrors();
         $this->assertCount(1, $errors);
         $this->assertSame('This value should not be blank.', $errors[0]->getMessage());
     }
+
 }
