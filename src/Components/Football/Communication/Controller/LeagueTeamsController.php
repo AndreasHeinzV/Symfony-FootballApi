@@ -9,13 +9,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/league')]
 class LeagueTeamsController extends AbstractController
 {
     public function __construct(private FootballBusinessFacadeInterface $footballBusinessFacade)
     {
     }
 
-    #[Route('/{leagueName}/{leagueId<\d+>}', name: 'league_detail')]
+    #[Route('/{leagueName}/{leagueId<[A-Za-z0-9-]+>}', name: 'league_detail')]
     public function index(string $leagueId): Response
     {
 

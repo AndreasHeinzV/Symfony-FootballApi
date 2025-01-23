@@ -33,7 +33,7 @@ class LeagueTeamControllerTest extends WebTestCase
 
     public function testGetLeagueTeam(): void
     {
-        $this->client->request('GET', '/Campeonato%20Brasileiro%20S%C3%A9rie%20A/BSA');
+        $this->client->request('GET', '/league/Campeonato%20Brasileiro%20S%C3%A9rie%20A/BSA');
         $response = $this->client->getResponse();
         $content = $response->getContent();
         self::assertResponseIsSuccessful();
