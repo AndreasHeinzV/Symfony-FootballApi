@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\ResetPassword\Persistence\Business;
+namespace App\Components\ResetPassword\Persistence;
 
 use App\Entity\ResetPasswordRequest;
 use App\Entity\User;

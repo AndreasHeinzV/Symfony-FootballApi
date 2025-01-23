@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Components\ResetPassword\Persistence\Business\ResetPasswordRequestRepository;
+use App\Components\ResetPassword\Persistence\ResetPasswordRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestTrait;

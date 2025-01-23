@@ -6,7 +6,6 @@ namespace App\Components\Football\Communication\Controller;
 
 use App\Components\Football\Business\FootballBusinessFacadeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -16,7 +15,7 @@ class LeagueTeamsController extends AbstractController
     {
     }
 
-    #[Route('/{leagueName}/{leagueId}', name: 'league_detail')]
+    #[Route('/{leagueName}/{leagueId<\d+>}', name: 'league_detail')]
     public function index(string $leagueId): Response
     {
 
