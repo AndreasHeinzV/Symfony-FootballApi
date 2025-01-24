@@ -44,5 +44,31 @@ class ProductEntityManagerTest extends BaseTestCase
         self::assertSame('scarf', $product->getProductName());
     }
 
+    public function testUpdateProductEntityAmount(): void
+    {
+        $productDto = new ProductDto('scarf', 'clubName', 'imageLink', 'scarf', 'L', 40, 'link', 3);
+        $user = $this->userRepository->findUserByMail(Config::USER_EMAIL_ONE);
+        $this->entityManager->saveProduct($productDto, $user);
+        $product = $this->productRepository->getProductEntityById($user, 1);
+        $amount = $product->getAmount();
+        self::assertSame(3, $amount);
 
+        $this->entityManager->updateProductAmount($product, 4);
+        $productAfter = $this->productRepository->getProductEntityById($user, 1);
+
+        self::assertSame('scarf', $product->getProductName());
+        self::assertSame(7, $productAfter->getAmount());
+    }
+
+    public function testDeleteProductEntity(): void
+    {
+        $productDto = new ProductDto('scarf', 'clubName', 'imageLink', 'scarf', 'L', 40, 'link', 3);
+        $user = $this->userRepository->findUserByMail(Config::USER_EMAIL_ONE);
+        $this->entityManager->saveProduct($productDto, $user);
+        $product = $this->productRepository->getProductEntityById($user, 1);
+        self::assertInstanceOf(Product::class, $product);
+        $this->entityManager->deleteProduct($user, $product->getId());
+        $productAfter = $this->productRepository->getProductEntityById($user, 1);
+        self::assertNull($productAfter);
+    }
 }

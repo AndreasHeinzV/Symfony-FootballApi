@@ -55,7 +55,7 @@ class ProductRepository extends ServiceEntityRepository
             $productDtoEntities[] = $this->productMapper->createProductDto(
                 $productEntity->getCategory(),
                 $productEntity->getTeamName(),
-                $productEntity->getName(),
+                $productEntity->getProductName(),
                 $productEntity->getImageLink(),
                 $productEntity->getSize(),
                 $productEntity->getAmount(),
