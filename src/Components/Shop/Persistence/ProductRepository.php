@@ -2,7 +2,9 @@
 
 namespace App\Components\Shop\Persistence;
 
+use App\Components\Shop\Persistence\Mapper\ProductMapper;
 use App\Entity\Product;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -11,7 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private ProductMapper $productMapper)
     {
         parent::__construct($registry, Product::class);
     }
@@ -40,4 +42,32 @@ class ProductRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function getProductEntities(User $user): array
+    {
+        $productEntities = $this->findBy(['userId' => $user->getId()]);
+
+        if (empty($productEntities)) {
+            return [];
+        }
+        $productDtoEntities = [];
+        foreach ($productEntities as $productEntity) {
+            $productDtoEntities[] = $this->productMapper->createProductDto(
+                $productEntity->getCategory(),
+                $productEntity->getTeamName(),
+                $productEntity->getName(),
+                $productEntity->getImageLink(),
+                $productEntity->getSize(),
+                $productEntity->getAmount(),
+                $productEntity->getPrice()
+            );
+        }
+
+        return $productDtoEntities;
+    }
+
+    public function getProductEntityById(User $user, int $id): ?Product
+    {
+        return $this->findOneBy(['userId' => $user->getId(), 'id' => $id]);
+    }
 }

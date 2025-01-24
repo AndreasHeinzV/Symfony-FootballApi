@@ -8,18 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class CartPageController extends AbstractController
+class ProductDetailsController extends AbstractController
 {
-    public function __construct()
-    {
-    }
-
-    #[Route('/cart-page', name: 'cart-page')]
+    #[Route('/product-details', name: 'product_details')]
     public function index(): Response
     {
-        $products = null;
-
-        return $this->render('cart/cartPage.html.twig', ['products' => $products]);
+        return $this->render('details/index.html.twig');
     }
-
 }
