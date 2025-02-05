@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/league')]
 class LeagueTeamsController extends AbstractController
 {
-    public function __construct(private FootballBusinessFacadeInterface $footballBusinessFacade)
+    public function __construct(private readonly FootballBusinessFacadeInterface $footballBusinessFacade)
     {
     }
 

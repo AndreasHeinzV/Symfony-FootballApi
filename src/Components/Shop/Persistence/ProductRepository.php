@@ -70,4 +70,9 @@ class ProductRepository extends ServiceEntityRepository
     {
         return $this->findOneBy(['userId' => $user->getId(), 'id' => $id]);
     }
+
+    public function getProductEntityByName(User $user, string $name): ?Product
+    {
+        return $this->findOneBy(['productName' => $name, 'userId' => $user->getId()]);
+    }
 }

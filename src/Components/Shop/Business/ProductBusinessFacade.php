@@ -4,7 +4,15 @@ declare(strict_types=1);
 
 namespace App\Components\Shop\Business;
 
-class ProductBusinessFacade
+use App\Components\Shop\Business\Model\CalculatePrice;
+use App\Components\Shop\Business\Model\CreateProducts;
+use App\Components\Shop\Business\Model\ProductManager;
+use App\Components\Shop\Persistence\Dtos\ProductDto;
+use App\Components\Shop\Persistence\Mapper\ProductMapper;
+use App\Components\Shop\Persistence\ProductRepository;
+use App\Entity\User;
+
+readonly class ProductBusinessFacade
 {
     public function __construct(
         private CreateProducts $createProducts,
@@ -14,9 +22,15 @@ class ProductBusinessFacade
         private ProductRepository $productRepository,
     ) {
     }
-    public function getClubProducts(string $teamId): array
+
+    public function getClubProducts(int $teamId): array
     {
         return $this->createProducts->createProducts($teamId);
+    }
+
+    public function getProductDto(int $teamId, string $category, $productName): ?ProductDto
+    {
+        return $this->createProducts->createProduct($teamId, $category, $productName);
     }
 
     public function createProduct(
@@ -25,7 +39,7 @@ class ProductBusinessFacade
         string $name,
         string $image,
         ?string $size,
-        ?int $amount
+        ?int $amount,
     ): ProductDto {
         return $this->productMapper->createProductDto($category, $teamName, $name, $image, $size, $amount, null);
     }
@@ -35,29 +49,28 @@ class ProductBusinessFacade
         return $this->calculatePrice->calculateProductPrice($productDto);
     }
 
-    public function AddProductToCart(ProductDto $productDto): void
+    public function AddProductToCart(User $user, ProductDto $productDto): void
     {
-        $this->productManager->addProductToCart($productDto);
+        $this->productManager->addProductToCart($user, $productDto);
     }
 
-    public function getProducts(UserDTO $userDto): ?array
+    public function getProducts(User $user): ?array
     {
-        return $this->productRepository->getProductEntities($userDto);
+        return $this->productRepository->getProductEntities($user);
     }
 
-    public function increaseProductQuantity(string $productName): void
+    public function increaseProductQuantity(User $user, string $productName): void
     {
-        $this->productManager->increaseProductQuantity($productName);
+        $this->productManager->increaseProductQuantity($user, $productName);
     }
 
-    public function decreaseProductQuantity(string $productName): void
+    public function decreaseProductQuantity(User $user, string $productName): void
     {
-        $this->productManager->decreaseProductQuantity($productName);
+        $this->productManager->decreaseProductQuantity($user, $productName);
     }
 
-    public function deleteProduct(string $productName): void
+    public function deleteProduct(User $user, string $productName): void
     {
-        $this->productManager->deleteProductFromCart($productName);
+        $this->productManager->deleteProductFromCart($user, $productName);
     }
-
 }

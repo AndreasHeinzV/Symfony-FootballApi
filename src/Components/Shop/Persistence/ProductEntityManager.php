@@ -48,4 +48,12 @@ readonly class ProductEntityManager
             $this->entityManager->flush();
         }
     }
+    public function manipulateProductEntityAmount(Product $productEntity, int $amount): void
+    {
+        $productEntity->setAmount($productEntity->getAmount() + $amount);
+        $this->entityManager->persist($productEntity);
+        $this->entityManager->flush();
+    }
+
+
 }

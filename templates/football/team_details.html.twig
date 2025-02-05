@@ -32,6 +32,8 @@
         <a href="/?page=shop&teamId={{ players.teamID }}&teamName={{ players.teamName | url_encode }}"
            class="button">View
             Products</a>
+        <a href="{{ path('club_shop', {'teamName': players.teamName, 'teamId': players.teamID}) }}">NEW SHOP</a>
+
     {% else %}
 
         <h1> Page not found return to homepage</h1>
